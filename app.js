@@ -111,7 +111,7 @@ class UI {
             container.insertBefore(div, form)
             div.appendChild(document.createTextNode(message))
                 //make showAlert vanish
-            setTimeout(() => document.querySelector(".alert").remove(), 1000);
+            setTimeout(() => document.querySelector(".alert").remove(), 2500);
         }
         //clear field
     static clearFields() {
