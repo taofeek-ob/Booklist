@@ -13,40 +13,60 @@ var dater = Date.parse(date);
 const options = { dateStyle: 'full'}
 this.date= new Date(dater).toLocaleDateString(undefined, options)
         //
+
+
+        
+
        let  rting = rating;
-        this.rating = rting + " / " + beforerating(rting)
-        function beforerating(x) {
+
+
        
-switch (x) {
+       const rrr1 = `<span class="fa fa-star checked"></span>
+       <span class="fa fa-star "></span>
+       <span class="fa fa-star "></span>
+       <span class="fa fa-star"></span>
+       <span class="fa fa-star"></span><br>`
+       const rrr2 = `<span class="fa fa-star checked"></span>
+       <span class="fa fa-star checked"></span>
+       <span class="fa fa-star "></span>
+       <span class="fa fa-star"></span>
+       <span class="fa fa-star"></span><br>`
+       const rrr3 = `<span class="fa fa-star checked"></span>
+       <span class="fa fa-star checked"></span>
+       <span class="fa fa-star checked"></span>
+       <span class="fa fa-star"></span>
+       <span class="fa fa-star"></span><br>`
+       const rrr4 = `<span class="fa fa-star checked"></span>
+       <span class="fa fa-star checked"></span>
+       <span class="fa fa-star checked"></span>
+       <span class="fa fa-star checked"></span>
+       <span class="fa fa-star"></span><br>`
+       const rrr5 = `<span class="fa fa-star checked"></span>
+       <span class="fa fa-star checked"></span>
+       <span class="fa fa-star checked"></span>
+       <span class="fa fa-star checked"></span>
+       <span class="fa fa-star checked"></span>
+       <br>
+       `
+       this.rating = beforerating(rting)
+       
+        function beforerating(rting) {
+       
+switch (rting) {
             case "1":
-                return "Complete waste of time"
+                return rrr1 + " Complete waste of time";
                 break;
             case "2":
-                return  "I struggled"
-                break;
-            case "3":
-                return "Fine but not happy with it"
+                return rrr2 + " Fine but not happy with it";
                 break;
             case "4":
-                return  "Satisfactory, not too bad"
+                return   rrr3 + " Satisfactory, not too bad";
                 break;
+            case "4":
+                return  rrr4 + " Really liked it";
+           break;
             case "5":
-                return  "Really liked it"
-                break;
-            case "6":
-                return "Loved reading it "
-                break;
-            case "7":
-                return "Hard to put down"
-                break;
-            case "8":
-                return "Adored it"
-                break;
-            case "9":
-                return "Impactful"
-                break;
-            case "10":
-                return "Flawless in every way"
+                return rrr5 +  " Flawless in every way"
                 break;
 
         
@@ -86,10 +106,10 @@ class UI {
   <td class= " align-middle point" >${book.title}</td>
   <td class= " align-middle point">${book.author}</td>
   <td class= " align-middle point">${book.review}</td>
-  <td class= " align-middle point">${book.rating}</td>
+  <td class= " align-middle point text-center">${book.rating}</td>
   <td class= " align-middle point">${book.genre}</td>
-  <td class= " align-middle point">${book.date}</td>
-  <td class=" align-middle"><a href="#" class="btn btn-light delete "><i class="fas fa-trash fa-lg"></i> </a></td>
+  <td class= " align-middle point ">${book.date}</td>
+  <td class=" align-middle"><a href="#" class="btn btn-outline-light delete  "><span class=""><i class="fas fa-trash fa-lg "></i></span> </a></td>
 `;
 
 //<td class=" align-middle"><a href="#" class="btn  delete "><i class="fas fa-trash fa-lg"></i> </a></td>
@@ -99,6 +119,10 @@ class UI {
     static deleteBook(el) {
         if (el.classList.contains("delete")) {
             el.parentElement.parentElement.remove();
+
+        }
+        else if (el.classList.contains("fas-trash")) {
+            el.parentElement.parentElement.parentElement.remove();
 
         }
     }
@@ -187,7 +211,7 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
             UI.showAlert("Please Fill All Fields", "danger");
         } 
        else if (JSON.parse(localStorage.getItem("books")).some(ch => ch.title == title && ch.author == author)) {
-            UI.showAlert("You've read this book before", "info");
+          return  UI.showAlert("You've read this book before", "info");
         }
         else {
 
@@ -237,6 +261,7 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
     // Events: Remove Book
 document.querySelector("#book-list").addEventListener("click", (e) => {
     //var table = $('#tabler').DataTable();
+    
     var result = confirm("Want to delete?");
     console.log(e.target);
     if (result) {

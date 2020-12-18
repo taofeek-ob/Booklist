@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/9b84f5844e.js" crossorigin="anonymous"></script>
+
+    <title>
+        Booklist
+    </title>
+    <style>
+        i {
+            font-family: fontawesome !important;
+        }
+        
+        .slider:hover {
+            opacity: 1;
+        }
+        
+        .slide-control {
+            display: block;
+            width: 100%;
+            height: calc(1.5em + .75rem + 2px);
+            /* padding: .375rem .5rem; */
+            /* font-size: .9375rem; */
+            /* font-weight: 400; */
+            /* line-height: 1.5; */
+            color: #495057;
+            background-color: #fff;
+            background-clip: padding-box;
+            /* border: 1px solid #ccc; */
+            border-radius: 0;
+            transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+        }
+    </style>
+
+
+
+    <style>
+        table.dataTable thead .sorting:after,
+        table.dataTable thead .sorting:before,
+        table.dataTable thead .sorting_asc:after,
+        table.dataTable thead .sorting_asc:before,
+        table.dataTable thead .sorting_asc_disabled:after,
+        table.dataTable thead .sorting_asc_disabled:before,
+        table.dataTable thead .sorting_desc:after,
+        table.dataTable thead .sorting_desc:before,
+        table.dataTable thead .sorting_desc_disabled:after,
+        table.dataTable thead .sorting_desc_disabled:before {
+            bottom: .5em;
+        }
+        
+        th {
+            cursor: pointer;
+        }
+        
+        th,
+        td {
+            text-align: left;
+        }
+        
+        .form-rounded {
+            border-radius: 1rem;
+        }
+        
+        .slidecontainer {
+            width: 100%;
+        }
+        
+        .point {
+            pointer-events: none;
+        }
+    </style>
+
+    <script>
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toGMTString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        function checkCookie() {
+            var user = getCookie("username");
+            if (user != "") {
+                alert("Welcome back " + user + ", so great to see you!");
+            } else {
+                user = prompt("Holla reader! Please enter your name:", "");
+                if (user != "" && user != null) {
+                    setCookie("username", user, 30);
+                }
+            }
+        }
+    </script>
+
+
+
+
+    <style type="text/css">
+        table {
+            counter-reset: row-num-1;
+        }
+        
+        table tr {
+            counter-increment: row-num;
+        }
+        
+        table tr td:first-child::before {
+            content: counter(row-num) ". ";
+        }
+        
+        .fa-trash {
+            color: rgb(255, 0, 0);
+        }
+        
+        .checked {
+            color: orange;
+        }
+    </style>
+
+
+</head>
+
+<body onload="checkCookie()">
+    <div class="container mt-4">
+        <h1 class="text-center">
+            <i class="fas fa-book-open text-primary"></i> <span class="tester" id='demod'></span> <span class="text-primary">Book</span>List</h1>
+
+        <div class="container mt-4">
+            <script type="text/javascript">
+                document.write("<p >");
+                var day = new Date();
+                var hr = day.getHours();
+                if (hr == 1) {
+                    document.write("Good morning! 1AM and still your going! ");
+                }
+                if (hr == 2) {
+                    document.write("Hey, it is past 2AM! The bars must be closed!");
+                }
+                if (hr == 3) {
+                    document.write("Hey, it is after 3AM! Are you a vampire or what?");
+                }
+                if (hr == 4) {
+                    document.write("4AM?,<i class='fas fa-user-circle  icon-2x'></i> <span id='demod '></span> You must roam all night huh!");
+                }
+                if (hr == 5) {
+                    document.write("Whoa! It's almost daylight and your still going!");
+                }
+                if (hr == 6) {
+                    document.write("Hey, isn't it too early to be using your computer");
+                }
+                if ((hr == 6) || (hr == 7) || (hr == 8) || (hr == 9) || (hr == 10)) {
+                    document.write("<div class='align-baseline'><i class='fa fa-user-circle  fa-3x'> </i><span class='align-middle'>Good Morning  <span id='demod' ></span></span></div>");
+                }
+                if (hr == 11) {
+                    document.write("11AM... Is it time for lunch yet?");
+                }
+                if (hr == 12) {
+                    document.write("NOON! Great, it must be time for lunch!");
+                }
+                if (hr == 14) {
+                    document.write("It's 2PM. Have you eaten lunch yet?");
+                }
+                if ((hr == 15) || (hr == 16) || (hr == 13)) {
+                    document.write("Good Afternoon!");
+                }
+                if ((hr == 17) || (hr == 18) || (hr == 19) || (hr == 20) || (hr == 21) || (hr == 22)) {
+                    document.write("Good Evening! <span id='demod' ></span> Welcome to prime time on the web!");
+                }
+                if (hr == 23) {
+                    document.write("It's almost midnight...Aren't you sleepy yet?");
+                }
+                if (hr == 0) {
+                    document.write("It's midnight... do you ever sleep?");
+                }
+                document.write("</p>");
+                document.getElementById("demod").innerHTML = getCookie("username")
+            </script>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+        <form action="" id="book-form" class="justify-content-center">
+            <div class="row">
+                <div class="form-group center col-sm-6">
+                    <label for="title">Title</label>
+                    <input type="text" id="title" class="form-control form-rounded">
+                </div>
+                <div class="form-group col-sm-6">
+                    <label for="Author">Author</label>
+                    <input type="text" id="author" class="form-control form-rounded">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="review">Review</label>
+                <textarea id="review" rows=3 class="form-control form-rounded"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="genre">Select list:</label>
+                <select class="form-control form-rounded" id="genre" placeholder="Search...">
+                  <option></option>
+                  <option>Fiction</option>
+                  <option>Non-Fiction</option>
+                  <option>Poetry</option>
+                  <option>Narrative</option>
+                  <option>Novel</option>
+                  <option>Prose</option>
+                  <option>Short-Story</option>
+                  <option>Essay</option>
+                  <option>Biography</option>
+                  <option>Satire</option>
+                  <option>Mystery</option>
+                  <option>History</option>
+                  <option>Philosophy</option>
+                  <option>Sci-Fi</option>
+                  <option>Fantasy Fiction</option>
+                  <option>Memoir</option>
+                  
+                </select>
+            </div>
+            <div class="row">
+
+
+                <div class="form-group col-sm-6 ">
+                    <div class="slidecontainer">
+                        <label for="rating">Rate Book: <span id="demo"></span><span id="cased"></span></label>
+                        <input type="range" min="0" max="5" value="0" class="slide-control" id="rating">
+                    </div>
+                </div>
+
+                <div class="form-group col-sm-6">
+
+                    <label for="Date ">Date Completed </label>
+                    <input type="date" id="date" class="form-control form-rounded">
+                </div>
+
+
+            </div>
+            <input type="submit" value="Add Book" class="btn btn-primary btn-block form-rounded">
+
+            <input type="search" placeholder="Search..." class="form-control search-input form-rounded mt-4 col-sm-4" data-table="book-list">
+
+
+
+
+
+            <table class="table table-striped mt-2 book-list table-responsive-md" id="tabler">
+                <thead>
+                    <tr>
+                        <th class=" align-middle">
+                            S/N
+                        </th>
+                        <th class=" align-middle">
+                            Title
+                        </th>
+                        <th class=" align-middle" onclick="tableSort(this)">
+                            Author</th>
+                        <th class=" align-middle">Review</th>
+                        <th class=" align-middle text-center" onclick="numberTableSort(this,true)">Rating</th>
+                        <th class=" align-middle" onclick="">Genre</th>
+                        <th class=" align-middle" onclick="dateTimeTableSort(this,'DateTime')">Date Completed</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="book-list"></tbody>
+            </table>
+
+
+
+        </form>
+
+    </div>
+
+    <script src="js/app.js "></script>
+    <script src="js/IntlTableSort.js"></script>
+    <script src="js/IntlTableSort.DateTime.js"></script>
+    <script src="js/IntlTableSort.Number.js"></script>
+
+    <!-- jQuery -->
+
+    <!-- Bootstrap tooltips -->
+
+    <!-- Bootstrap core JavaScript -->
+
+    <!-- MDB core JavaScript -->
+
+    <!-- MDBootstrap Datatables  -->
+
+    <script>
+        (function(document) {
+            'use strict';
+
+            var TableFilter = (function(myArray) {
+                var search_input;
+
+                function _onInputSearch(e) {
+                    search_input = e.target;
+                    var tables = document.getElementsByClassName(search_input.getAttribute('data-table'));
+                    myArray.forEach.call(tables, function(table) {
+                        myArray.forEach.call(table.tBodies, function(tbody) {
+                            myArray.forEach.call(tbody.rows, function(row) {
+                                var text_content = row.textContent.toLowerCase();
+                                var search_val = search_input.value.toLowerCase();
+                                row.style.display = text_content.indexOf(search_val) > -1 ? '' : 'none';
+                            });
+                        });
+                    });
+                }
+
+                return {
+                    init: function() {
+                        var inputs = document.getElementsByClassName('search-input');
+                        myArray.forEach.call(inputs, function(input) {
+                            input.oninput = _onInputSearch;
+                        });
+                    }
+                };
+            })(Array.prototype);
+
+            document.addEventListener('readystatechange', function() {
+                if (document.readyState === 'complete') {
+                    TableFilter.init();
+                }
+            });
+
+        })(document);
+        date.max = new Date().toISOString().split("T")[0];
+    </script>
+    <script>
+        var slider = document.getElementById("rating");
+        var output = document.getElementById("demo");
+        var caser = document.getElementById("cased");
+        output.innerHTML = slider.value + " /  You Have not Rated";
+        slider.oninput = function() {
+            output.innerHTML = this.value + " / ";
+            switch (this.value) {
+                case "0":
+                    cased.innerHTML = "You Have not Rated"
+                    break;
+                case "1":
+                    cased.innerHTML = "Complete waste of time"
+                    break;
+                case "2":
+                    cased.innerHTML = "Fine but not happy with it"
+                    break;
+                case "3":
+                    cased.innerHTML = "Satisfactory, not too bad"
+                    break;
+                case "4":
+                    cased.innerHTML = "Really liked it"
+                    break;
+                case "5":
+                    cased.innerHTML = "Flawless in every way"
+                    break;
+
+            }
+        };
+    </script>
+
+
+
+</body>
+
+</html>
