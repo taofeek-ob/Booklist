@@ -1,15 +1,71 @@
 // Book Class: Represents A book
 class Book {
-    constructor(title, author, review, date) {
+    constructor(title, author, review,rating, genre, date) {
         this.title = title;
         this.author = author;
         this.review = review;
+//
 
-        let dater = new Date(date)
-        this.date = dater.toDateString()
-    }
+this.genre = genre;
+//
+var dater = Date.parse(date);
+
+const options = { dateStyle: 'full'}
+this.date= new Date(dater).toLocaleDateString(undefined, options)
+        //
+       let  rting = rating;
+        this.rating = rting + " / " + beforerating(rting)
+        function beforerating(x) {
+       
+switch (x) {
+            case "1":
+                return "Complete waste of time"
+                break;
+            case "2":
+                return  "I struggled"
+                break;
+            case "3":
+                return "Fine but not happy with it"
+                break;
+            case "4":
+                return  "Satisfactory, not too bad"
+                break;
+            case "5":
+                return  "Really liked it"
+                break;
+            case "6":
+                return "Loved reading it "
+                break;
+            case "7":
+                return "Hard to put down"
+                break;
+            case "8":
+                return "Adored it"
+                break;
+            case "9":
+                return "Impactful"
+                break;
+            case "10":
+                return "Flawless in every way"
+                break;
+
+        
 }
 
+    
+
+       
+        
+          
+          
+
+
+        
+
+
+    }
+}
+}
 // for date
 let today = new Date().toISOString().substr(0, 10);
 document.querySelector("#date").value = today;
@@ -26,15 +82,17 @@ class UI {
         const row = document.createElement("tr");
 
         row.innerHTML = `
-  <td class= "text-center align-middle"></td>
-  <td class= "text-center align-middle">${book.title}</td>
-  <td class= "text-center align-middle">${book.author}</td>
-  <td class= "text-center align-middle">${book.review}</td>
-  <td class= "text-center align-middle">${book.date}</td>
-  <td class="text-center align-middle"><a href="#" class="btn btn-danger btn-sm delete" onclick = "return confirm('Are You Sure You Want To Delete This Item');">X</a></td>
+        <td class= "text-center align-middle point"></td>
+  <td class= " align-middle point" >${book.title}</td>
+  <td class= " align-middle point">${book.author}</td>
+  <td class= " align-middle point">${book.review}</td>
+  <td class= " align-middle point">${book.rating}</td>
+  <td class= " align-middle point">${book.genre}</td>
+  <td class= " align-middle point">${book.date}</td>
+  <td class=" align-middle"><a href="#" class="btn btn-light delete "><i class="fas fa-trash fa-lg"></i> </a></td>
 `;
 
-
+//<td class=" align-middle"><a href="#" class="btn  delete "><i class="fas fa-trash fa-lg"></i> </a></td>
         list.appendChild(row);
     }
 
@@ -60,6 +118,10 @@ class UI {
         document.querySelector("#title").value = "";
         document.querySelector("#author").value = "";
         document.querySelector("#review").value = "";
+        document.querySelector("#rating").value = "0";
+        document.querySelector("#demo").innerHTML= "0";
+        document.querySelector("#cased").innerHTML= " / You Have not rated";
+        document.querySelector("#genre").value = "";
         document.querySelector("#date").value = today;
 
     }
@@ -106,44 +168,92 @@ class store {
 document.addEventListener("DOMContentLoaded", UI.displayBooks);
 // Events: add Book
 document.querySelector("#book-form").addEventListener("submit", (e) => {
-
+    //var table = $('#tabler').DataTable();
         //prevent default submit
         e.preventDefault();
+       
         //Get Form Values
         const title = document.querySelector("#title").value;
         const author = document.querySelector("#author").value;
         const review = document.querySelector("#review").value;
-        let date = document.querySelector("#date").value;
 
+
+        const rating = document.querySelector("#rating").value;
+        const genre = document.querySelector("#genre").value;
+        let date = document.querySelector("#date").value;
+       
         //validate
-        if (title == "" || author == "" || review == "" || date == "") {
+        if (title == "" || author == "" || review == "" || rating == "" || rating == "0"  || genre == "" || date == "") {
             UI.showAlert("Please Fill All Fields", "danger");
-        } else {
+        } 
+       else if (JSON.parse(localStorage.getItem("books")).some(ch => ch.title == title && ch.author == author)) {
+            UI.showAlert("You've read this book before", "info");
+        }
+        else {
+
+
+            //const table = document.querySelector("#tabler");
+            //if (table.classList.contains("dataTables_empty")) {
+                //console.log("yes");
+            //}
+           // table
+    //.row();
+    
+    
+            
+           
+            
             //instantiate book
-            const book = new Book(title, author, review, date);
+            const book = new Book(title, author, review,rating, genre, date);
+            
             UI.addBookToList(book)
 
+
+            
             //add books to local storage
             store.addBook(book)
+            
+                
+            
+            
 
             //show success
             UI.showAlert("Book Added", "success")
                 // clear fields
             UI.clearFields()
 
-        }
+            //
+            
+            
+            
+            
+
+            }
+
+        
 
 
     })
     // Events: Remove Book
 document.querySelector("#book-list").addEventListener("click", (e) => {
-
-
+    //var table = $('#tabler').DataTable();
+    var result = confirm("Want to delete?");
+    console.log(e.target);
+    if (result) {
     //show success
+    console.log(e.target);
     UI.deleteBook(e.target)
 
     // remove book from store
     store.removeBook(e.target.parentElement.previousElementSibling.textContent);
 
-    UI.showAlert("Book Delete", "info")
-})
+    UI.showAlert("Book Delete", "info");
+    //table
+    //.row()
+    //.clear()
+    //.draw();
+   
+    }
+});
+
+
